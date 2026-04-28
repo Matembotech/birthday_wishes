@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* ============================================
+   DESIGN TOKENS — Birthday Wishes
+   ============================================ */
+
+@theme {
+  /* Primary Colors */
+  --color-coral: #FF6B6B;
+  --color-coral-light: #FF8A8A;
+  --color-coral-dark: #E55A5A;
+  --color-golden: #FFE66D;
+  --color-golden-light: #FFED9A;
+  --color-teal: #A8EDEA;
+  --color-teal-light: #C4F4F2;
+
+  /* Backgrounds */
+  --color-bg-warm: #FFF9F0;
+  --color-bg-card: #FFFFFF;
+  --color-bg-upload: #FFF5F3;
+
+  /* Borders */
+  --color-border-warm: #E8D5C4;
+  --color-border-upload: #FFB4A2;
+  --color-border-error: #E53E3E;
+
+  /* Text */
+  --color-text-primary: #2D2D2D;
+  --color-text-secondary: #6B6B6B;
+  --color-text-error: #E53E3E;
+  --color-text-success: #38A169;
+
+  /* Fonts */
+  --font-playfair: 'Playfair Display', serif;
+  --font-dm: 'DM Sans', sans-serif;
+  --font-dancing: 'Dancing Script', cursive;
+
+  /* Shadows */
+  --shadow-card: 0 20px 60px rgba(255, 107, 107, 0.1);
+  --shadow-card-hover: 0 25px 70px rgba(255, 107, 107, 0.15);
+  --shadow-input-focus: 0 0 0 4px rgba(255, 107, 107, 0.15);
+  --shadow-btn: 0 8px 30px rgba(255, 107, 107, 0.3);
+  --shadow-btn-hover: 0 12px 40px rgba(255, 107, 107, 0.4);
+
+  /* Animations */
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+  --animate-float: float-up 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+}
+
+/* ============================================
+   KEYFRAME ANIMATIONS
+   ============================================ */
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(255, 107, 107, 0.4); }
+}
+
+@keyframes float-up {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-dm);
+  background-color: var(--color-bg-warm);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle warm pattern on body */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255, 107, 107, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 230, 109, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(168, 237, 234, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-warm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-warm);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-coral);
+}
+
+/* ============================================
+   SELECTION STYLING
+   ============================================ */
+
+::selection {
+  background: rgba(255, 107, 107, 0.2);
+  color: var(--color-text-primary);
+}
