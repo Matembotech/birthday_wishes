@@ -76,6 +76,23 @@ export default function BirthdayPage() {
   return (
     <div className="min-h-screen overflow-hidden relative" style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%)' }}>
       
+      {/* Curtain Reveal Animation */}
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: '-100vh' }}
+        transition={{ duration: 1.4, ease: [0.77, 0, 0.175, 1], delay: 0.5 }}
+        className="fixed inset-0 z-50 flex items-center justify-center shadow-[0_10px_50px_rgba(0,0,0,0.5)]"
+        style={{ background: 'linear-gradient(135deg, #0F3460 0%, #1A1A2E 100%)' }}
+      >
+        <motion.div
+          animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="text-5xl"
+        >
+          ✨
+        </motion.div>
+      </motion.div>
+
       {/* Floating Particles Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -135,12 +152,12 @@ export default function BirthdayPage() {
           </div>
         </motion.div>
 
-        {/* Name & Relationship */}
+        {/* Name */}
         <motion.h1
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="text-[40px] md:text-[52px] font-bold mb-1 leading-tight"
+          transition={{ delay: 1.0, duration: 0.8 }}
+          className="text-[40px] md:text-[52px] font-bold mb-1 leading-tight mt-6"
           style={{ fontFamily: 'var(--font-playfair)', color: '#FFFFFF' }}
         >
           🎂 {wish.name} 🎂
@@ -148,19 +165,36 @@ export default function BirthdayPage() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="text-lg md:text-xl mb-12"
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="text-lg md:text-xl mb-4"
           style={{ fontFamily: 'var(--font-dm)', color: 'rgba(255,255,255,0.7)' }}
         >
           {wish.relationship}
         </motion.p>
+
+        {/* Sender Custom Message */}
+        {wish.sender_message && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.8, type: 'spring' }}
+            className="mb-12 max-w-lg px-4"
+          >
+            <p 
+              className="text-[26px] md:text-[32px] leading-relaxed" 
+              style={{ fontFamily: 'var(--font-dancing)', color: '#FFB4A2', textShadow: '0 2px 10px rgba(0,0,0,0.4)' }}
+            >
+              "{wish.sender_message}"
+            </p>
+          </motion.div>
+        )}
 
         {/* Message Cards */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="w-full flex flex-col gap-5"
+          className={`w-full flex flex-col gap-5 ${!wish.sender_message ? 'mt-8' : ''}`}
         >
           {[wish.message_1, wish.message_2, wish.message_3].map((msg, idx) => (
             msg && (
@@ -191,7 +225,7 @@ export default function BirthdayPage() {
         <motion.div 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
-          transition={{ delay: 2, duration: 1 }}
+          transition={{ delay: 3.5, duration: 1 }}
           className="mt-16"
         >
            <Link to="/" className="text-sm px-6 py-3 rounded-full border border-[rgba(255,255,255,0.2)] text-white hover:bg-[rgba(255,255,255,0.1)] transition-colors" style={{ fontFamily: 'var(--font-dm)' }}>

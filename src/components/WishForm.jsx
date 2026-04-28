@@ -30,6 +30,7 @@ export default function WishForm() {
   /* ========== STATE ========== */
   const [name, setName] = useState('')
   const [relationship, setRelationship] = useState('')
+  const [senderMessage, setSenderMessage] = useState('')
   const [imageFile, setImageFile] = useState(null)
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -86,6 +87,7 @@ export default function WishForm() {
     const e = {}
     if (!name.trim()) e.name = 'Tafadhali jaza jina'
     if (!relationship) e.relationship = 'Chagua relationship'
+    if (!senderMessage.trim()) e.senderMessage = 'Tafadhali andika ujumbe wako'
     if (!imageFile) e.image = 'Tafadhali upload picha'
     setErrors(e)
     return Object.keys(e).length === 0
@@ -131,7 +133,8 @@ export default function WishForm() {
         .from('wishes')
         .insert([{ 
           name, 
-          relationship, 
+          relationship,
+          sender_message: senderMessage,
           image_url: imageUrl,
           message_1: aiMessages[0],
           message_2: aiMessages[1],
@@ -170,6 +173,7 @@ export default function WishForm() {
     clearImage()
     setName('')
     setRelationship('')
+    setSenderMessage('')
     setErrors({})
     setShareUrl(null)
     setCopied(false)
@@ -357,8 +361,56 @@ export default function WishForm() {
               </div>
             </motion.div>
 
+            {/* ---- Field 2.5: Sender Message ---- */}
+            <motion.div custom={2} variants={fieldVariants} initial="hidden" animate="visible" className="mb-6">
+              <label
+                htmlFor="message-input"
+                className="block mb-2.5"
+                style={{ fontFamily: 'var(--font-dancing)', fontSize: '18px', color: '#FF6B6B' }}
+              >
+                💌 Ujumbe Wako
+              </label>
+              <textarea
+                id="message-input"
+                value={senderMessage}
+                onChange={(e) => {
+                  setSenderMessage(e.target.value)
+                  if (errors.senderMessage) setErrors((p) => ({ ...p, senderMessage: '' }))
+                }}
+                placeholder="Andika ujumbe wako wa moyoni hapa..."
+                className="w-full outline-none transition-all duration-300 resize-none"
+                rows="3"
+                style={{
+                  padding: '14px 18px',
+                  borderRadius: '12px',
+                  border: `2px solid ${errors.senderMessage ? '#E53E3E' : '#E8D5C4'}`,
+                  fontFamily: 'var(--font-dm)',
+                  fontSize: '16px',
+                  color: '#2D2D2D',
+                  backgroundColor: '#FFFFFF',
+                }}
+                onFocus={(e) => {
+                  if (!errors.senderMessage) {
+                    e.target.style.borderColor = '#FF6B6B'
+                    e.target.style.boxShadow = '0 0 0 4px rgba(255,107,107,0.15)'
+                  }
+                }}
+                onBlur={(e) => {
+                  if (!errors.senderMessage) {
+                    e.target.style.borderColor = '#E8D5C4'
+                    e.target.style.boxShadow = 'none'
+                  }
+                }}
+              />
+              {errors.senderMessage && (
+                <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-xs mt-1.5 ml-1" style={{ fontFamily: 'var(--font-dm)', color: '#E53E3E' }}>
+                  {errors.senderMessage}
+                </motion.p>
+              )}
+            </motion.div>
+
             {/* ---- Field 3: Image Upload ---- */}
-            <motion.div custom={2} variants={fieldVariants} initial="hidden" animate="visible" className="mb-8">
+            <motion.div custom={3} variants={fieldVariants} initial="hidden" animate="visible" className="mb-8">
               <label
                 className="block mb-2.5"
                 style={{ fontFamily: 'var(--font-dancing)', fontSize: '18px', color: '#FF6B6B' }}
@@ -441,7 +493,7 @@ export default function WishForm() {
             </motion.div>
 
             {/* ---- Generate Button ---- */}
-            <motion.div custom={3} variants={fieldVariants} initial="hidden" animate="visible">
+            <motion.div custom={4} variants={fieldVariants} initial="hidden" animate="visible">
               <motion.button
                 onClick={handleGenerate}
                 disabled={isLoading}
