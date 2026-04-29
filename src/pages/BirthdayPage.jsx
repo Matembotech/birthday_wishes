@@ -452,7 +452,7 @@ export default function BirthdayPage() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 max-w-[660px] mx-auto px-4 sm:px-6 pt-14 pb-24 flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-[660px] mx-auto px-4 sm:px-6 pt-10 md:pt-14 pb-24 flex flex-col items-center justify-center text-center">
 
         {/* Happy Birthday Title */}
         <motion.div
